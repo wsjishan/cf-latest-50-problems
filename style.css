@@ -10,3 +10,9 @@ input[type="text"],
 select {
   margin-right: 9px;
 }
+.github-link {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  z-index: 1000;
+}

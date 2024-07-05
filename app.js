@@ -21,7 +21,7 @@ document.getElementById('fetch-problems').addEventListener('click', async () => 
   const problemsContainer = document.getElementById('problems');
 
   // Clear previous results
-  problemsContainer.innerHTML = ''; 
+  problemsContainer.innerHTML = '';
 
   // Fetch problems from Codeforces API
   const response = await fetch('https://codeforces.com/api/problemset.problems');
