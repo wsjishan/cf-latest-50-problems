@@ -9,15 +9,19 @@ ratings.forEach(rating => {
   ratingSelect.appendChild(option);
 });
 
-
 document.body.insertBefore(ratingSelect, document.getElementById('fetch-problems'));
 
 // Event listener for fetching problems based on selected rating
 document.getElementById('fetch-problems').addEventListener('click', async () => {
+  const fetchButton = document.getElementById('fetch-problems');
+  fetchButton.disabled = true; // Disable the button
+
   const username = document.getElementById('cf-username').value;
   const selectedRating = document.getElementById('rating-select').value;
   const problemsContainer = document.getElementById('problems');
-  problemsContainer.innerHTML = ''; // Clear previous results
+
+  // Clear previous results
+  problemsContainer.innerHTML = ''; 
 
   // Fetch problems from Codeforces API
   const response = await fetch('https://codeforces.com/api/problemset.problems');
@@ -45,6 +49,9 @@ document.getElementById('fetch-problems').addEventListener('click', async () => 
     }
   });
 
+  // Create a fragment to improve performance
+  const fragment = document.createDocumentFragment();
+
   // Display problems and accepted count
   problems.forEach((problem, index) => {
     const problemId = `${problem.contestId}-${problem.index}`;
@@ -55,7 +62,7 @@ document.getElementById('fetch-problems').addEventListener('click', async () => 
         <p>Verdicts: ${verdicts}</p>
         <button onclick="goToProblem('${problemId}')">Go to Problem</button>
     `;
-    problemsContainer.appendChild(problemElement);
+    fragment.appendChild(problemElement);
 
     // Style based on verdicts
     if (verdicts.includes('OK')) {
@@ -67,8 +74,14 @@ document.getElementById('fetch-problems').addEventListener('click', async () => 
 
   // Display the count of accepted problems out of 50
   const acceptedCountElement = document.createElement('p');
+  acceptedCountElement.id = 'accepted-count'; // Set ID for the element
   acceptedCountElement.innerHTML = `Accepted: ${acceptedCount} out of 50`;
-  problemsContainer.insertBefore(acceptedCountElement, problemsContainer.firstChild);
+  fragment.insertBefore(acceptedCountElement, fragment.firstChild);
+
+  // Append the fragment to the problemsContainer
+  problemsContainer.appendChild(fragment);
+
+  fetchButton.disabled = false; // Re-enable the button
 });
 
 // Function to navigate to a problem on Codeforces
@@ -77,5 +90,3 @@ function goToProblem(problemId) {
   const url = `https://codeforces.com/problemset/problem/${contestId}/${index}`;
   window.open(url, '_blank').focus();
 }
-
-
