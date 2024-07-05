@@ -1,0 +1,12 @@
+body {
+  font-family: Roboto, Arial, sans-serif;
+}
+#problems div {
+  margin-top: 15px;
+  padding: 9px;
+  border: 1px solid #ddd;
+}
+input[type="text"],
+select {
+  margin-right: 9px;
+}
