@@ -1,3 +1,4 @@
+import { inject } from "@vercel/analytics";
 // Populate rating select options
 const ratings = [
   800, 900, 1000, 1100, 1200, 1300, 1400, 1500, 1600, 1700, 1800, 1900, 2000,
@@ -113,3 +114,5 @@ function goToProblem(problemId) {
   const url = `https://codeforces.com/problemset/problem/${contestId}/${index}`;
   window.open(url, "_blank").focus();
 }
+
+inject();
